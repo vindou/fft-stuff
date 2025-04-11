@@ -1,32 +1,13 @@
-#include <math.h>
-#include <complex.h>
+#include "CTFFT.h"
 
-float* even_idx(float input_array[]) {
-
-
-}
-
-float* odd_idx(float input_array[]) {
-
-}
-
-
-float* FFT(float input_array[]) {
-    int arr_length = (int) sizeof(input_array) / sizeof(input_array[0]);
-
-    if (arr_length == 1) return input_array;
-
-    float* even = even_idx(input_array);
-    float* odd = odd_idx(input_array);
-
-    float resultant_arr[(int) arr_length];
-
-    for (int i = 0; i <= floor((float) arr_length / 2) - 1; i++) {
-        float twiddle = exp(-2 * M_PI * I * i / arr_length);
-
-        resultant_arr[i] = even[i] + twiddle * odd[i];
-        resultant_arr[(int) (i + floor((float) arr_length / 2))] = even[i] - twiddle * odd[i];
+int main(void) {
+    int n = 8;
+    complex double data[] = {1, 1, 1, 1, 0, 0, 0, 0};
+    iterative_fft(data, n);
+    printf("FFT Result:\n");
+    for (int i = 0; i < n; i++) {
+        printf("[%d] = %.5f + %.5fi\n", i, creal(data[i]), cimag(data[i]));
     }
 
-    return resultant_arr;
+    return 0;
 }
